@@ -1,0 +1,2664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community - Get Spending Money Online</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="auth.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --apple-blue: #007AFF;
+            --apple-blue-dark: #0056B3;
+            --apple-green: #30D158;
+            --apple-orange: #FF9500;
+            --apple-red: #FF3B30;
+            --apple-purple: #AF52DE;
+            --apple-gray: #8E8E93;
+            --apple-gray-light: #F2F2F7;
+            --apple-gray-2: #AEAEB2;
+            --apple-gray-3: #C7C7CC;
+            --apple-gray-4: #D1D1D6;
+            --apple-gray-5: #E5E5EA;
+            --apple-gray-6: #F2F2F7;
+            --apple-black: #000000;
+            --apple-white: #FFFFFF;
+            --bg-primary: #FAFAFA;
+            --bg-secondary: rgba(255, 255, 255, 0.8);
+            --bg-glass: rgba(255, 255, 255, 0.72);
+            --text-primary: #1D1D1F;
+            --text-secondary: #86868B;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-large: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --blur: blur(20px);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #FFFFFF 0%, #F5F7FA 100%);
+            min-height: 100vh;
+            line-height: 1.47059;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Top Navigation - Apple Style */
+        .top-nav {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 max(20px, env(safe-area-inset-left));
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .top-nav.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+            box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            height: 52px;
+        }
+
+        .logo {
+            font-size: 21px;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: -0.022em;
+        }
+
+        /* Updated modern logo icon */
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #007AFF 0%, #5856D6 50%, #AF52DE 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: white;
+            box-shadow: 0 2px 8px rgba(0, 122, 255, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: rotate(0deg); opacity: 0; }
+            50% { transform: rotate(180deg); opacity: 1; }
+        }
+
+        .login-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .login-btn {
+            background: var(--apple-blue);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            letter-spacing: -0.01em;
+        }
+
+        .login-btn:hover {
+            background: var(--apple-blue-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 122, 255, 0.3);
+        }
+
+        .user-info-nav {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .user-avatar-nav {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding: 80px 20px 60px;
+            text-align: center;
+            background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: clamp(48px, 8vw, 80px);
+            font-weight: 700;
+            color: #1D1D1F;
+            margin-bottom: 20px;
+            letter-spacing: -0.03em;
+            line-height: 1.05;
+        }
+
+        .hero-subtitle {
+            font-size: 21px;
+            color: #424245;
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+            letter-spacing: -0.01em;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Enhanced Crypto Portal */
+        .crypto-portal {
+            background: var(--bg-glass);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            padding: 32px;
+            box-shadow: var(--shadow-large);
+        }
+
+        .portal-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .portal-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            letter-spacing: -0.022em;
+        }
+
+        .portal-subtitle {
+            color: var(--text-secondary);
+            font-size: 17px;
+            font-weight: 400;
+        }
+
+        /* Payment Method Tabs */
+        .payment-method-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            background: var(--apple-gray-6);
+            border-radius: 12px;
+            padding: 4px;
+        }
+
+        .payment-tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+        }
+
+        .payment-tab.active {
+            background: var(--apple-white);
+            color: var(--apple-blue);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .payment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 17px;
+            letter-spacing: -0.01em;
+        }
+
+        .form-input {
+            padding: 16px 20px;
+            border: 1px solid var(--apple-gray-4);
+            border-radius: 12px;
+            font-size: 17px;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.2s ease;
+            background: var(--apple-white);
+            color: var(--text-primary);
+            -webkit-appearance: none;
+        }
+
+        .form-input:focus {
+            border-color: var(--apple-blue);
+            box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
+        }
+
+        /* Crypto selector remains same */
+        .crypto-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .crypto-option {
+            background: var(--apple-white);
+            border: 1px solid var(--apple-gray-4);
+            border-radius: 12px;
+            padding: 20px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .crypto-option:hover {
+            border-color: var(--apple-blue);
+            box-shadow: 0 2px 8px rgba(0, 122, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .crypto-option.selected {
+            border-color: var(--apple-blue);
+            background: rgba(0, 122, 255, 0.05);
+            box-shadow: 0 0 0 1px var(--apple-blue);
+        }
+
+        .crypto-option.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            color: var(--apple-blue);
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .crypto-icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+            display: block;
+            color: #F7931A;
+        }
+
+        .crypto-name {
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        /* Bank Transfer Form */
+        .bank-transfer-form {
+            display: none;
+        }
+
+        .bank-transfer-form.active {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .bank-info-card {
+            background: var(--apple-gray-6);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--apple-gray-5);
+        }
+
+        .bank-info-title {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .bank-detail {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .bank-detail-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .bank-detail-value {
+            color: var(--text-primary);
+            font-weight: 600;
+            font-family: 'SF Mono', monospace;
+        }
+
+        /* Credit Card Bill Pay Form */
+        .cc-bill-form {
+            display: none;
+        }
+
+        .cc-bill-form.active {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .discount-badge {
+            background: linear-gradient(135deg, var(--apple-green) 0%, #32D74B 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        /* Transaction Timer */
+        .transaction-timer {
+            display: none;
+            background: var(--apple-orange);
+            color: white;
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+        .timer-display {
+            font-size: 24px;
+            font-family: 'SF Mono', monospace;
+            margin-top: 8px;
+        }
+
+        .pay-button {
+            background: linear-gradient(135deg, var(--apple-blue) 0%, var(--apple-purple) 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+            letter-spacing: -0.01em;
+        }
+
+        .pay-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 122, 255, 0.4);
+        }
+
+        .pay-button:active {
+            transform: translateY(0);
+        }
+
+        .features-list {
+            margin-top: 28px;
+            padding: 24px;
+            background: #F8F9FA;
+            border-radius: 12px;
+            border: 1px solid #E5E7EB;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            color: #111827;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .feature-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .feature-icon {
+            color: #059669;
+            font-size: 20px;
+            width: 20px;
+            font-weight: 900;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        /* ARIA Chat - Enhanced */
+        .aria-chat {
+            background: var(--bg-glass);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            height: 860px;
+            min-height: 860px;
+            box-shadow: var(--shadow-large);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px 24px;
+            text-align: center;
+        }
+
+        .chat-title {
+            font-size: 21px;
+            font-weight: 700;
+            color: #1D1D1F;
+            margin-bottom: 4px;
+            letter-spacing: -0.022em;
+        }
+
+        .chat-subtitle {
+            font-size: 15px;
+            color: #424245;
+            font-weight: 500;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: var(--apple-gray-6);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 15px;
+            line-height: 1.4;
+            animation: messageSlide 0.3s ease-out;
+            word-wrap: break-word;
+        }
+
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.assistant {
+            background: var(--apple-white);
+            color: var(--text-primary);
+            align-self: flex-start;
+            border-bottom-left-radius: 6px;
+            box-shadow: var(--shadow-light);
+            border: 1px solid var(--apple-gray-5);
+        }
+
+        .message.user {
+            background: var(--apple-blue);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0, 122, 255, 0.3);
+        }
+        
+        .typing-indicator {
+            display: none;
+            padding: 10px 20px;
+            align-self: flex-start;
+        }
+
+        .typing-indicator span {
+            font-style: italic;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .typing-dots {
+            display: inline-block;
+            margin-left: 5px;
+        }
+        .typing-dots .dot {
+            display: inline-block;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background-color: var(--text-secondary);
+            margin: 0 2px;
+            animation: typingAnimation 1.2s infinite ease-in-out;
+        }
+        .typing-dots .dot:nth-child(1) { animation-delay: 0s; }
+        .typing-dots .dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dots .dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingAnimation {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-4px); }
+        }
+
+        .chat-input-container {
+            padding: 16px 20px;
+            border-top: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+        }
+
+        .chat-input-group {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+            background: var(--apple-gray-6);
+            border-radius: 20px;
+            padding: 8px;
+            border: 1px solid var(--apple-gray-4);
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 16px;
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
+            background: transparent;
+            color: var(--text-primary);
+            resize: none;
+            min-height: 20px;
+            max-height: 80px;
+            line-height: 1.4;
+        }
+
+        .chat-input::placeholder {
+            color: var(--apple-gray);
+        }
+
+        .chat-send-btn {
+            background: var(--apple-blue);
+            color: white;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .chat-send-btn:hover {
+            background: var(--apple-blue-dark);
+            transform: scale(1.05);
+        }
+
+        .chat-send-btn:disabled {
+            background: var(--apple-gray-3);
+            transform: none;
+            cursor: not-allowed;
+        }
+
+        /* Login Required Screen */
+        .login-required-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-required-container {
+            background: var(--bg-glass);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border-radius: 24px;
+            padding: 48px;
+            box-shadow: var(--shadow-large);
+            border: 1px solid var(--border-color);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .login-required-header {
+            margin-bottom: 40px;
+        }
+
+        .logo-large {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .logo-large h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .logo-icon-large {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #007AFF 0%, #5856D6 50%, #AF52DE 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-icon-large::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        .login-required-header h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .login-required-header p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .login-required-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .primary-auth-btn {
+            background: linear-gradient(135deg, var(--apple-blue) 0%, var(--apple-purple) 100%);
+            color: white;
+            border: none;
+            padding: 18px 36px;
+            border-radius: 14px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 16px rgba(0, 122, 255, 0.4);
+            letter-spacing: -0.01em;
+            min-width: 180px;
+        }
+
+        .primary-auth-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 24px rgba(0, 122, 255, 0.5);
+        }
+
+        .primary-auth-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .login-required-note {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin: 0;
+        }
+
+        .link-btn {
+            background: none;
+            border: none;
+            color: var(--apple-blue);
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 15px;
+            transition: all 0.2s ease;
+        }
+
+        .link-btn:hover {
+            color: var(--apple-blue-dark);
+            text-decoration: underline;
+        }
+
+        /* Auth Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 4000;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .auth-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--bg-glass);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border-radius: 20px;
+            padding: 0;
+            box-shadow: var(--shadow-large);
+            border: 1px solid var(--border-color);
+            max-width: 440px;
+            width: 90%;
+            z-index: 2001;
+            overflow: hidden;
+        }
+
+        .auth-toggle {
+            display: flex;
+            background: var(--apple-gray-6);
+            border-radius: 16px;
+            padding: 6px;
+            margin: 24px 32px 0 32px;
+            border: 1px solid var(--border-color);
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 12px 16px;
+            background: transparent;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .auth-tab.active {
+            background: var(--apple-white);
+            color: var(--apple-blue);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-form {
+            padding: 24px 32px 32px 32px;
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .modal-subtitle {
+            color: var(--text-secondary);
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        .auth-form-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .auth-button {
+            background: linear-gradient(135deg, var(--apple-blue) 0%, var(--apple-purple) 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+            letter-spacing: -0.01em;
+        }
+
+        .auth-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 122, 255, 0.4);
+        }
+
+        .auth-button:active {
+            transform: translateY(0);
+        }
+
+        .auth-button:disabled {
+            background: var(--apple-gray-3);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 8px 0;
+        }
+
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        .auth-divider span {
+            padding: 0 16px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .google-auth-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: white;
+            border: 2px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .google-auth-btn:hover {
+            border-color: var(--apple-blue);
+            background: #f8f9fa;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+
+        .close-modal:hover {
+            background: var(--apple-gray-5);
+            color: var(--text-primary);
+        }
+
+        /* Mock Card Styles */
+        .mock-card-container {
+            margin-top: 32px;
+            padding: 24px;
+            background: var(--apple-gray-6);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-medium);
+            text-align: center;
+        }
+
+        .mock-card {
+            background: linear-gradient(135deg, #3A3A3C 0%, #58585A 100%);
+            border-radius: 12px;
+            padding: 20px;
+            color: var(--apple-white);
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+            width: 100%;
+            max-width: 360px; 
+            height: 220px; 
+            margin: 0 auto 20px auto;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-bank-name {
+            font-size: 17px;
+            font-weight: 600;
+            opacity: 0.9;
+        }
+
+        .card-chip {
+            width: 40px;
+            height: auto;
+            filter: invert(1) brightness(1.5) contrast(1.5);
+        }
+
+        .card-number {
+            font-size: 23px;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-align: center;
+            margin: 15px 0;
+            font-family: 'SF Mono', 'Menlo', 'Courier New', Courier, monospace;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .card-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5px;
+        }
+        
+        .card-detail-group {
+            text-align: left;
+        }
+        .card-detail-group:last-child {
+            text-align: right;
+        }
+
+        .card-label {
+            font-size: 10px;
+            font-weight: 500;
+            display: block;
+            opacity: 0.7;
+            margin-bottom: 3px;
+            text-transform: uppercase;
+        }
+
+        .card-value {
+            font-size: 15px;
+            font-weight: 600;
+            font-family: 'SF Mono', 'Menlo', 'Courier New', Courier, monospace;
+        }
+
+        .card-holder-name {
+            font-size: 15px;
+            font-weight: 500;
+            text-transform: uppercase;
+            text-align: left;
+            letter-spacing: 0.5px;
+            padding: 0 5px;
+        }
+
+        .card-logo {
+            position: absolute;
+            bottom: 18px;
+            right: 20px;
+            width: 55px;
+            opacity: 0.9;
+        }
+
+        .card-instructions {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+
+        .close-card-btn {
+            background: var(--apple-blue);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .close-card-btn:hover {
+            background: var(--apple-blue-dark);
+            transform: translateY(-1px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 30px 20px;
+            }
+
+            .aria-chat {
+                height: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 60px 20px 40px;
+            }
+
+            .hero-title {
+                font-size: 42px;
+            }
+
+            .hero-subtitle {
+                font-size: 19px;
+            }
+
+            .crypto-portal,
+            .aria-chat {
+                margin: 0;
+                border-radius: 12px;
+            }
+
+            .crypto-selector {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .nav-content {
+                height: 48px;
+            }
+
+            .logo {
+                font-size: 19px;
+            }
+            .mock-card {
+                height: 200px;
+            }
+            .card-number {
+                font-size: 18px;
+            }
+            .card-value, .card-holder-name {
+                font-size: 14px;
+            }
+
+            .payment-method-tabs {
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .auth-modal {
+                max-width: 95%;
+                margin: 0 auto;
+            }
+
+            .auth-toggle {
+                margin: 16px 20px 0 20px;
+            }
+
+            .auth-form {
+                padding: 20px 20px 24px 20px;
+            }
+
+            .modal-title {
+                font-size: 24px;
+            }
+
+            .auth-button,
+            .google-auth-btn {
+                padding: 14px 24px;
+            }
+
+            .login-required-container {
+                padding: 32px 24px;
+                max-width: 90%;
+            }
+
+            .logo-large h1 {
+                font-size: 28px;
+            }
+
+            .logo-icon-large {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+
+            .login-required-header h2 {
+                font-size: 24px;
+            }
+
+            .login-required-header p {
+                font-size: 16px;
+            }
+
+            .primary-auth-btn {
+                padding: 16px 32px;
+                font-size: 16px;
+            }
+        }
+
+        /* iOS Safari specific fixes */
+        @supports (-webkit-touch-callout: none) {
+            .crypto-portal,
+            .aria-chat {
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+            }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-primary: #000000;
+                --bg-secondary: rgba(28, 28, 30, 0.9);
+                --bg-glass: rgba(28, 28, 30, 0.8);
+                --text-primary: #FFFFFF;
+                --text-secondary: #8E8E93;
+                --apple-gray-6: #1C1C1E;
+                --apple-white: #1C1C1E;
+                --border-color: rgba(84, 84, 88, 0.65);
+            }
+
+            body {
+                background: linear-gradient(135deg, #000000 0%, #101012 100%);
+            }
+            
+            .message.assistant {
+                background: #2C2C2E;
+                color: #E0E0E0;
+                border: 1px solid rgba(84,84,88,0.4);
+            }
+
+            .mock-card-container {
+                background: #1C1C1E;
+            }
+            
+            .features-list {
+                background: #1C1C1E;
+                border: 1px solid var(--border-color);
+                color: var(--text-primary);
+            }
+            .feature-item {
+                 color: var(--text-primary);
+            }
+            .feature-icon {
+                color: var(--apple-green);
+                }
+
+            .bank-info-card {
+                background: #2C2C2E;
+                border-color: #3A3A3C;
+            }
+
+            .login-required-overlay {
+                background: linear-gradient(135deg, #000000 0%, #101012 100%);
+            }
+
+            .login-required-container {
+                background: rgba(28, 28, 30, 0.95);
+            }
+
+            .auth-modal {
+                background: rgba(28, 28, 30, 0.95);
+            }
+
+            .google-auth-btn {
+                background: #2C2C2E;
+                border-color: #3A3A3C;
+                color: var(--text-primary);
+            }
+
+            .google-auth-btn:hover {
+                background: #3A3A3C;
+                border-color: var(--apple-blue);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="top-nav" id="topNav" style="display: none;">
+        <div class="nav-content">
+            <div class="logo">
+                <div class="logo-icon">💎</div>
+                Community
+            </div>
+            <div class="login-section">
+                <button class="login-btn" id="authButton">
+                    Sign In
+                </button>
+                <div class="user-info-nav" id="userInfoNav">
+                    <img src="" alt="User Avatar" class="user-avatar-nav" id="userAvatarNav">
+                    <span id="userNameNav"></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section" id="heroSection" style="display: none;">
+        <div class="hero-content">
+            <h1 class="hero-title">Get spending money online.</h1>
+            <p class="hero-subtitle">Transform your crypto into instant spending power with Community's seamless payment experience.</p>
+        </div>
+    </section>
+
+    <!-- Login Required Screen -->
+    <div class="login-required-overlay" id="loginRequiredOverlay">
+        <div class="login-required-container">
+            <div class="login-required-content">
+                <div class="login-required-header">
+                    <div class="logo-large">
+                        <div class="logo-icon-large">💎</div>
+                        <h1>Community</h1>
+                    </div>
+                    <h2>Welcome to Community</h2>
+                    <p>Transform your crypto into instant spending power with our seamless payment experience.</p>
+                </div>
+                
+                <div class="login-required-actions">
+                    <button class="primary-auth-btn" onclick="showAuthModal()">
+                        Get Started
+                    </button>
+                    <p class="login-required-note">
+                        Already have an account? <button class="link-btn" onclick="showAuthModal(); showSignIn();">Sign In</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="auth-modal">
+            <button class="close-modal" onclick="closeAuthModal()">&times;</button>
+            
+            <!-- Auth Toggle Buttons -->
+            <div class="auth-toggle">
+                <button class="auth-tab active" id="signInTab" onclick="showSignIn()">
+                    Sign In
+                </button>
+                <button class="auth-tab" id="signUpTab" onclick="showSignUp()">
+                    Sign Up
+                </button>
+            </div>
+            
+            <!-- Sign In Form -->
+            <div class="auth-form" id="signInForm">
+                <div class="modal-header">
+                    <h2 class="modal-title">Welcome Back</h2>
+                    <p class="modal-subtitle">Sign in to your Community account</p>
+                </div>
+                <form class="auth-form-content" id="emailSignInForm">
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" id="signInEmail" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-input" id="signInPassword" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="auth-button" id="signInSubmitBtn">
+                        Sign In
+                    </button>
+                    <div class="auth-divider">
+                        <span>or</span>
+                    </div>
+                    <button type="button" onclick="signInWithGoogle()" class="google-auth-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                        </svg>
+                        Continue with Google
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Sign Up Form -->
+            <div class="auth-form" id="signUpForm" style="display: none;">
+                <div class="modal-header">
+                    <h2 class="modal-title">Create Account</h2>
+                    <p class="modal-subtitle">Join Community with any email provider</p>
+                </div>
+                <form class="auth-form-content" id="emailSignUpForm">
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" id="signUpEmail" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-input" id="signUpPassword" placeholder="Create a secure password" required>
+                    </div>
+                    <button type="submit" class="auth-button" id="signUpSubmitBtn">
+                        Create Account
+                    </button>
+                    <div class="auth-divider">
+                        <span>or</span>
+                    </div>
+                    <button type="button" onclick="signInWithGoogle()" class="google-auth-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                        </svg>
+                        Continue with Google
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content" id="mainContent" style="display: none;">
+        <div class="crypto-portal">
+            <div class="portal-header">
+                <h2 class="portal-title">Fund Your Account</h2>
+                <p class="portal-subtitle">Choose your preferred payment method</p>
+            </div>
+
+            <!-- Payment Method Tabs -->
+            <div class="payment-method-tabs">
+                <button class="payment-tab active" data-method="crypto">Cryptocurrency</button>
+                <button class="payment-tab" data-method="bank">Bank Transfer</button>
+                <button class="payment-tab" data-method="cc-bill">Credit Card Bill Pay</button>
+            </div>
+
+            <!-- Crypto Payment Form -->
+            <form class="payment-form" id="cryptoForm" onsubmit="processCryptoPayment(event)">
+                <div class="form-group">
+                    <label class="form-label">Payment Method</label>
+                    <div class="crypto-selector">
+                        <div class="crypto-option selected" data-crypto="btc">
+                            <div class="crypto-icon">₿</div>
+                            <div class="crypto-name">Bitcoin</div>
+                        </div>
+                        <div class="crypto-option" data-crypto="eth">
+                            <div class="crypto-icon">Ξ</div>
+                            <div class="crypto-name">Ethereum</div>
+                        </div>
+                        <div class="crypto-option" data-crypto="usdt">
+                            <div class="crypto-icon">₮</div>
+                            <div class="crypto-name">Tether</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Amount (USD)</label>
+                    <input type="number" class="form-input" placeholder="$10.00 - $10,000.00" min="10" max="10000" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email for Confirmation</label>
+                    <input type="email" class="form-input" id="paymentEmail" placeholder="your@email.com" required>
+                </div>
+
+                <button type="submit" class="pay-button">
+                    Continue with Crypto
+                </button>
+
+                <!-- Transaction Timer -->
+                <div class="transaction-timer" id="transactionTimer">
+                    <div>⏰ Please complete your payment within:</div>
+                    <div class="timer-display" id="timerDisplay">15:00</div>
+                    <div style="font-size: 14px; margin-top: 8px; opacity: 0.9;">
+                        Your crypto address will expire after this time
+                    </div>
+                </div>
+            </form>
+
+            <!-- Bank Transfer Form -->
+            <div class="bank-transfer-form" id="bankForm">
+                <div class="bank-info-card">
+                    <div class="bank-info-title">Wire Transfer Details</div>
+                    <div class="bank-detail">
+                        <span class="bank-detail-label">Bank Name:</span>
+                        <span class="bank-detail-value">Community Trust Bank</span>
+                    </div>
+                    <div class="bank-detail">
+                        <span class="bank-detail-label">Account Name:</span>
+                        <span class="bank-detail-value">Community Holdings LLC</span>
+                    </div>
+                    <div class="bank-detail">
+                        <span class="bank-detail-label">Account Number:</span>
+                        <span class="bank-detail-value">****-****-1234</span>
+                    </div>
+                    <div class="bank-detail">
+                        <span class="bank-detail-label">Routing Number:</span>
+                        <span class="bank-detail-value">021000021</span>
+                    </div>
+                    <div class="bank-detail">
+                        <span class="bank-detail-label">Reference:</span>
+                        <span class="bank-detail-value" id="bankReference">REF-USER-001</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Transfer Amount (USD)</label>
+                    <input type="number" class="form-input" placeholder="$100.00 minimum" min="100" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Your Bank Details (for verification)</label>
+                    <input type="text" class="form-input" placeholder="Your bank account holder name" required>
+                </div>
+
+                <button type="button" class="pay-button" onclick="processBankTransfer()">
+                    Submit Transfer Request
+                </button>
+            </div>
+
+            <!-- Credit Card Bill Pay Form -->
+            <div class="cc-bill-form" id="ccBillForm">
+                <div class="discount-badge">
+                    💳 Pay credit card bills with crypto at wholesale rates!
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Credit Card Number</label>
+                    <input type="text" class="form-input" id="ccNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Current Balance (USD)</label>
+                    <input type="number" class="form-input" placeholder="$500.00" min="1" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Payment Amount (USD)</label>
+                    <input type="number" class="form-input" placeholder="Amount to pay toward balance" min="1" step="0.01" required>
+                </div>
+
+                <div style="background: var(--apple-gray-6); padding: 16px; border-radius: 12px; margin: 16px 0; font-size: 14px; color: var(--text-secondary);">
+                    <strong>How it works:</strong> We pay your credit card directly and you fund the payment with cryptocurrency at wholesale rates. Processing time: 1-2 business days.
+                </div>
+
+                <button type="button" class="pay-button" onclick="processCreditCardBill()">
+                    Submit Bill Payment
+                </button>
+            </div>
+
+            <div class="features-list">
+                <div class="feature-item">
+                    <span class="feature-icon">✓</span>
+                    <span>Instant virtual card creation</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">✓</span>
+                    <span>Bank-level security</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">✓</span>
+                    <span>Use anywhere online</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">✓</span>
+                    <span>Real-time transaction tracking</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">✓</span>
+                    <span>24/7 automated support tickets</span>
+                </div>
+            </div>
+            
+            <div class="mock-card-container" id="mockCardContainer" style="display: none;">
+                <div class="mock-card">
+                    <div class="card-header">
+                        <span class="card-bank-name">Community Trust</span>
+                        <img src="https://img.icons8.com/fluency/48/000000/sim-card-chip.png" alt="Chip" class="card-chip"/>
+                    </div>
+                    <div class="card-number" id="mockCardNumber">---- ---- ---- ----</div>
+                    <div class="card-details">
+                        <div class="card-detail-group">
+                            <span class="card-label">VALID THRU</span>
+                            <span class="card-value" id="mockCardExpiry">MM/YY</span>
+                        </div>
+                        <div class="card-detail-group">
+                            <span class="card-label">CVV</span>
+                            <span class="card-value" id="mockCardCVV">---</span>
+                        </div>
+                    </div>
+                    <div class="card-holder-name" id="mockCardHolderName">CARDHOLDER NAME</div>
+                    <img src="https://img.icons8.com/color/48/000000/visa.png" alt="Visa Logo" class="card-logo"/>
+                </div>
+                <p class="card-instructions">Your virtual card is funded with $<strong id="mockCardAmount">0.00</strong>. Use these details for your online spending.</p>
+                <button class="close-card-btn" onclick="hideMockCard()">Close & Fund New Card</button>
+            </div>
+        </div>
+
+        <div class="aria-chat">
+            <div class="chat-header">
+                <h3 class="chat-title">ARIA Assistant</h3>
+                <p class="chat-subtitle">Your enhanced payment & support helper</p>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <div class="message assistant">
+                    Hi there! I'm ARIA, your enhanced Community assistant. I can help you with:
+                    <br><br>
+                    🏨 <strong>Hotel Bookings</strong> - Find and reserve accommodations<br>
+                    💳 <strong>Bill Payments</strong> - Pay utilities and credit card bills<br>
+                    🛒 <strong>Product Purchases</strong> - Buy items and arrange delivery<br>
+                    💰 <strong>Payment Support</strong> - Help with crypto, bank transfers, and virtual cards<br>
+                    🎫 <strong>Support Tickets</strong> - Automatically create and track your requests<br>
+                    📊 <strong>Transaction Status</strong> - Real-time updates on your payments
+                    <br><br>
+                    I'll gather all the details needed and create support tickets automatically to ensure fast processing. What can I assist you with today?
+                </div>
+            </div>
+            
+            <div class="typing-indicator" id="typingIndicator">
+                <span>ARIA is thinking</span>
+                <div class="typing-dots">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+
+            <div class="chat-input-container">
+                <div class="chat-input-group">
+                    <textarea 
+                        id="chatInput" 
+                        class="chat-input" 
+                        placeholder="Message ARIA..."
+                        rows="1"
+                    ></textarea>
+                    <button class="chat-send-btn" onclick="sendChatMessage()" id="sendBtn">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+// --- Enhanced NOWPayments Integration ---
+// NOWPayments Credentials (configured on backend server):
+// API Key: Y1PBEWN-SNT4GWM-N7KPW58-QQ7BRQH
+// IPN Secret: t482t52TYznaGksvd0fhMoMGoDnBzN96
+// Note: These credentials should be configured as environment variables on the backend server
+
+const SUPABASE_URL = 'https://doaefnuskojrjyskzamc.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRvYWVmbnVza29qcmp5c2t6YW1jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc0MjQ3NDAsImV4cCI6MjA2MzAwMDc0MH0.kdAs475Phman5gYM-POLN6y7wFLY8EqpzbolWNE9kAM';
+const ARIA_API_URL = 'https://web-production-4a4e.up.railway.app';
+
+let availableCurrencies = [];
+let nowPaymentsEnabled = false;
+let currentPaymentId = null;
+let paymentCheckInterval = null;
+let transactionTimer = null;
+let ARIA_SESSION_ID = generateAriaSessionId();
+let supabase = null;
+
+// Initialize Supabase
+try {
+    if (window.supabase && typeof window.supabase.createClient === 'function') {
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    }
+} catch (error) {
+    console.error('Error initializing Supabase:', error);
+}
+
+// UI Elements
+const authButton = document.getElementById('authButton');
+const userInfoNav = document.getElementById('userInfoNav');
+const userAvatarNav = document.getElementById('userAvatarNav');
+const userNameNav = document.getElementById('userNameNav');
+const paymentEmailInput = document.getElementById('paymentEmail');
+const chatInput = document.getElementById('chatInput');
+const sendBtn = document.getElementById('sendBtn');
+const typingIndicator = document.getElementById('typingIndicator');
+const messagesContainer = document.getElementById('chatMessages');
+const cryptoForm = document.getElementById('cryptoForm');
+const bankForm = document.getElementById('bankForm');
+const ccBillForm = document.getElementById('ccBillForm');
+const mockCardContainer = document.getElementById('mockCardContainer');
+
+function generateAriaSessionId() { 
+    return 'session_' + Math.random().toString(36).substr(2, 9); 
+}
+
+// Initialize NOWPayments
+async function initializeNOWPayments() {
+    try {
+        console.log('🔄 Initializing NOWPayments with live credentials...');
+        const response = await fetch(`${ARIA_API_URL}/api/nowpayments/status`);
+        const data = await response.json();
+        
+        nowPaymentsEnabled = data.available;
+        
+        if (data.available) {
+            availableCurrencies = data.supportedCurrencies || [];
+            console.log('✅ NOWPayments initialized with LIVE credentials:', data.environment);
+            console.log('💎 API Key configured:', data.apiConfigured ? 'Yes' : 'No');
+            console.log('🔔 IPN configured:', data.ipnConfigured ? 'Yes' : 'No');
+            addChatMessage(`🔗 **LIVE** cryptocurrency payments are now active! Supporting ${availableCurrencies.length || '150+'} cryptocurrencies via NOWPayments with real blockchain transactions.`, 'assistant');
+        } else {
+            console.log('⚠️ NOWPayments in mock mode:', data.message);
+            addChatMessage(`ℹ️ Running in demo mode. ${data.message || 'NOWPayments API credentials not configured on server.'}`, 'assistant');
+        }
+        
+        if (availableCurrencies.length > 0) {
+            updateCryptoSelector();
+        }
+        
+    } catch (error) {
+        console.error('Failed to initialize NOWPayments:', error);
+        addChatMessage('⚠️ Could not connect to NOWPayments API. Running in demo mode.', 'assistant');
+    }
+}
+
+// Update crypto selector with real supported currencies
+function updateCryptoSelector() {
+    const cryptoSelector = document.querySelector('.crypto-selector');
+    if (!cryptoSelector || availableCurrencies.length === 0) return;
+
+    const popularCrypto = ['btc', 'eth', 'usdt', 'ltc', 'xrp'];
+    const popular = availableCurrencies.filter(c => popularCrypto.includes(c.currency));
+    
+    if (popular.length > 0) {
+        cryptoSelector.innerHTML = '';
+        
+        popular.slice(0, 3).forEach((crypto, index) => {
+            const option = document.createElement('div');
+            option.className = `crypto-option ${index === 0 ? 'selected' : ''}`;
+            option.dataset.crypto = crypto.currency;
+            
+            option.innerHTML = `
+                <div class="crypto-icon">${getCryptoIcon(crypto.currency)}</div>
+                <div class="crypto-name">${crypto.name || crypto.currency.toUpperCase()}</div>
+            `;
+            
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.crypto-option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                updateMinimumAmount(crypto.currency);
+            });
+            
+            cryptoSelector.appendChild(option);
+        });
+    }
+}
+
+function getCryptoIcon(currency) {
+    const icons = {
+        'btc': '₿',
+        'eth': 'Ξ', 
+        'usdt': '₮',
+        'ltc': 'Ł',
+        'xrp': '✕',
+        'ada': '₳',
+        'dot': '●',
+        'bnb': '▲'
+    };
+    return icons[currency.toLowerCase()] || '◆';
+}
+
+// Get minimum payment amount for selected currency
+async function updateMinimumAmount(currency) {
+    try {
+        const response = await fetch(`${ARIA_API_URL}/api/nowpayments/min-amount/${currency}`);
+        const data = await response.json();
+        
+        const amountInput = document.querySelector('#cryptoForm input[type="number"]');
+        if (amountInput && data.min_amount) {
+            const minUSD = data.min_amount * 10;
+            amountInput.min = Math.max(10, minUSD);
+            amountInput.placeholder = `$${Math.max(10, minUSD).toFixed(2)} - $10,000.00`;
+        }
+    } catch (error) {
+        console.error('Error fetching minimum amount:', error);
+    }
+}
+
+// Enhanced crypto payment processing
+async function processCryptoPayment(event) {
+    event.preventDefault();
+    
+    const amountInputEl = event.target.querySelector('input[type="number"]');
+    const emailInputEl = event.target.querySelector('input[type="email"]');
+    const selectedCrypto = document.querySelector('.crypto-option.selected');
+
+    if (!amountInputEl || !emailInputEl || !selectedCrypto) {
+        addChatMessage("Form error. Please refresh and try again.", "assistant");
+        return;
+    }
+    
+    const amount = parseFloat(amountInputEl.value);
+    const email = emailInputEl.value;
+    const currency = selectedCrypto.dataset.crypto;
+
+    if (isNaN(amount) || amount < 10 || amount > 10000) {
+        addChatMessage("Please enter a valid amount between $10.00 and $10,000.00.", "assistant");
+        return;
+    }
+    
+    if (!email || !/^\S+@\S+\.\S+$/.test(email)) { 
+        addChatMessage("Please enter a valid email address.", "assistant");
+        return;
+    }
+
+    const submitBtn = event.target.querySelector('.pay-button');
+    const originalText = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Creating Payment...';
+
+    try {
+        console.log('Sending payment request:', { amount, email, currency, sessionId: ARIA_SESSION_ID });
+        
+        const response = await fetch(`${ARIA_API_URL}/api/nowpayments/payment`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                amount: amount,
+                email: email,
+                currency: currency,
+                sessionId: ARIA_SESSION_ID
+            }),
+        });
+
+        console.log('Response status:', response.status);
+
+        // Check if response is JSON
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            const textResponse = await response.text();
+            console.error('Non-JSON response received:', textResponse);
+            throw new Error(`Server returned HTML instead of JSON. Response: ${textResponse.substring(0, 200)}...`);
+        }
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Payment creation failed:', errorData);
+            throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        const paymentData = await response.json();
+        console.log('Payment created successfully:', paymentData);
+        
+        currentPaymentId = paymentData.payment_id;
+
+        // Start transaction timer
+        startTransactionTimer(15);
+        
+        // Start payment monitoring
+        startPaymentMonitoring(paymentData.payment_id);
+        
+        // Hide form and show payment details
+        cryptoForm.style.display = 'none';
+        document.querySelector('.features-list').style.display = 'none';
+        
+        // Show payment instructions
+        showPaymentInstructions(paymentData);
+        
+        const paymentMessage = `💎 **${paymentData.mockMode ? 'Demo' : 'LIVE'} Cryptocurrency Payment Created!**
+
+${paymentData.mockMode ? '🧪 **Demo Mode**' : '🔗 **LIVE NOWPayments Transaction**'}
+- Payment ID: ${paymentData.payment_id}
+- Amount: $${amount} USD
+- Cryptocurrency: ${currency.toUpperCase()}
+- ${paymentData.mockMode ? 'Mode: Demo/Testing' : 'Blockchain Network: LIVE'}
+${paymentData.mockMode ? '' : '- API: NOWPayments Production'}
+
+📧 Support ticket created automatically for faster processing.
+📊 Payment status will update automatically.${paymentData.mockMode ? '' : '\n⚠️ This is a REAL cryptocurrency transaction!'}`;
+        
+        addChatMessage(paymentMessage, 'assistant');
+
+    } catch (error) {
+        console.error('Payment creation error:', error);
+        addChatMessage(`❌ Payment creation failed: ${error.message}`, 'assistant');
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+    }
+}
+
+// FIXED: Payment monitoring function
+function startPaymentMonitoring(paymentId) {
+    if (paymentCheckInterval) {
+        clearInterval(paymentCheckInterval);
+    }
+
+    let checkCount = 0;
+    const maxChecks = nowPaymentsEnabled ? 60 : 20;
+
+    paymentCheckInterval = setInterval(async () => {
+        checkCount++;
+        
+        try {
+            const response = await fetch(`${ARIA_API_URL}/api/nowpayments/payment/${paymentId}`);
+            
+            if (!response.ok) {
+                throw new Error(`Failed to fetch payment status: ${response.status}`);
+            }
+            
+            const paymentStatus = await response.json();
+            console.log('Payment status update:', paymentStatus);
+            
+            updatePaymentStatus(paymentStatus);
+            
+            // Stop monitoring if payment is finished or failed
+            if (paymentStatus.payment_status === 'finished' || 
+                paymentStatus.payment_status === 'confirmed' ||
+                paymentStatus.payment_status === 'failed' ||
+                paymentStatus.payment_status === 'expired' ||
+                checkCount >= maxChecks) {
+                
+                clearInterval(paymentCheckInterval);
+                
+                if (paymentStatus.payment_status === 'finished' || paymentStatus.payment_status === 'confirmed') {
+                    handlePaymentSuccess(paymentStatus);
+                } else if (checkCount >= maxChecks && paymentStatus.payment_status === 'waiting') {
+                    handlePaymentTimeout();
+                }
+            }
+            
+        } catch (error) {
+            console.error('Error checking payment status:', error);
+            
+            // For demo mode, simulate progression
+            if (!nowPaymentsEnabled && checkCount <= 10) {
+                simulatePaymentProgression(checkCount);
+            }
+        }
+    }, nowPaymentsEnabled ? 15000 : 5000); // Check every 15s for real, 5s for demo
+}
+
+// FIXED: Update payment status display
+function updatePaymentStatus(paymentData) {
+    const statusMessages = {
+        'waiting': nowPaymentsEnabled ? '⏳ Waiting for blockchain confirmation...' : '⏳ Demo: Waiting for payment...',
+        'partially_paid': nowPaymentsEnabled ? '🔄 Partial payment received...' : '🔄 Demo: Partial payment...',
+        'confirming': nowPaymentsEnabled ? '⛓️ Payment received, confirming...' : '⛓️ Demo: Confirming...',
+        'confirmed': nowPaymentsEnabled ? '✅ Payment confirmed!' : '✅ Demo: Payment confirmed!',
+        'finished': nowPaymentsEnabled ? '🎉 Payment completed!' : '🎉 Demo: Payment completed!',
+        'failed': '❌ Payment failed',
+        'expired': '⏰ Payment expired'
+    };
+
+    const statusMessage = statusMessages[paymentData.payment_status] || `Status: ${paymentData.payment_status}`;
+    
+    addChatMessage(`📊 **Payment Status Update**\n${statusMessage}\n\nPayment ID: ${paymentData.payment_id}`, 'assistant');
+}
+
+// FIXED: Simulate payment progression for demo mode
+function simulatePaymentProgression(checkCount) {
+    const mockStatuses = ['waiting', 'partially_paid', 'confirming', 'confirmed'];
+    const statusIndex = Math.min(Math.floor(checkCount / 3), mockStatuses.length - 1);
+    const status = mockStatuses[statusIndex];
+    
+    updatePaymentStatus({
+        payment_id: currentPaymentId,
+        payment_status: status,
+        mockMode: true
+    });
+    
+    if (status === 'confirmed') {
+        setTimeout(() => {
+            handlePaymentSuccess({
+                payment_id: currentPaymentId,
+                payment_status: 'finished',
+                mockMode: true
+            });
+        }, 3000);
+    }
+}
+
+// FIXED: Handle successful payment
+function handlePaymentSuccess(paymentData) {
+    stopTransactionTimer();
+    
+    // Generate mock card details
+    const cardDetails = generateMockCardDetails();
+    let cardHolderName = "Valued Customer";
+    const amount = paymentData.price_amount || "50.00";
+    
+    // Get email from form if available
+    const emailInput = document.getElementById('paymentEmail');
+    if (emailInput && emailInput.value) {
+        const namePart = emailInput.value.split('@')[0];
+        cardHolderName = namePart.replace(/[^a-zA-Z0-9\s]/g, ' ').replace(/\./g, ' ').trim().toUpperCase() || "Valued Customer";
+    }
+
+    // Show virtual card
+    document.getElementById('mockCardNumber').textContent = cardDetails.cardNumber;
+    document.getElementById('mockCardExpiry').textContent = cardDetails.expiryDate;
+    document.getElementById('mockCardCVV').textContent = cardDetails.cvv;
+    document.getElementById('mockCardHolderName').textContent = cardHolderName;
+    document.getElementById('mockCardAmount').textContent = amount;
+    
+    // Hide payment instructions and show card
+    const instructionsEl = document.querySelector('.payment-instructions');
+    if (instructionsEl) {
+        instructionsEl.style.display = 'none';
+    }
+    
+    mockCardContainer.style.display = 'block';
+    
+    const successMessage = `🎉 **Payment Successful!**
+
+${nowPaymentsEnabled ? '⛓️ **Blockchain Confirmed**' : '✅ **Demo Completed**'}
+- Payment ID: ${paymentData.payment_id}
+- Status: ${paymentData.payment_status}
+
+💳 **Virtual Card Created**
+Your spending card has been funded with $${amount} and is ready to use!`;
+
+    addChatMessage(successMessage, 'assistant');
+}
+
+// FIXED: Handle payment timeout
+function handlePaymentTimeout() {
+    stopTransactionTimer();
+    addChatMessage('⏰ Payment window expired. No cryptocurrency was received within the timeframe. Please start a new payment if needed.', 'assistant');
+}
+
+// FIXED: Show payment instructions
+function showPaymentInstructions(paymentData) {
+    const instructionsContainer = document.createElement('div');
+    instructionsContainer.className = 'payment-instructions';
+    instructionsContainer.innerHTML = `
+        <div style="background: var(--bg-glass); border-radius: 16px; padding: 24px; margin-top: 20px; border: 1px solid var(--border-color);">
+            <h3 style="color: var(--text-primary); margin-bottom: 16px; font-size: 20px;">
+                ${nowPaymentsEnabled ? '🔗 Live Payment Instructions' : '🧪 Demo Payment'}
+            </h3>
+            
+            ${nowPaymentsEnabled ? `
+            <div style="background: var(--apple-gray-6); border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+                <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 8px;">Send exactly this amount:</div>
+                <div style="font-family: 'SF Mono', monospace; font-size: 18px; font-weight: 600; color: var(--apple-blue);">
+                    ${paymentData.pay_amount} ${paymentData.pay_currency?.toUpperCase()}
+                </div>
+            </div>
+            
+            <div style="background: var(--apple-gray-6); border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+                <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 8px;">To this address:</div>
+                <div style="font-family: 'SF Mono', monospace; font-size: 14px; font-weight: 600; color: var(--text-primary); word-break: break-all;">
+                    ${paymentData.pay_address}
+                </div>
+                <button onclick="copyToClipboard('${paymentData.pay_address}')" style="margin-top: 8px; padding: 6px 12px; background: var(--apple-blue); color: white; border: none; border-radius: 6px; font-size: 12px; cursor: pointer;">
+                    Copy Address
+                </button>
+            </div>
+            ` : `
+            <div style="background: #FFF3CD; border: 1px solid #FFEAA7; border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+                <div style="color: #856404; font-size: 14px;">
+                    🧪 <strong>Demo Mode:</strong> This is a simulated cryptocurrency payment. 
+                    Payment will progress automatically through the demo stages.
+                </div>
+            </div>
+            `}
+            
+            <button onclick="cancelPayment()" style="margin-top: 16px; padding: 12px 24px; background: var(--apple-red); color: white; border: none; border-radius: 8px; font-size: 14px; cursor: pointer;">
+                Cancel Payment
+            </button>
+        </div>
+    `;
+    
+    document.querySelector('.crypto-portal').appendChild(instructionsContainer);
+}
+
+// FIXED: Copy to clipboard utility
+function copyToClipboard(text) {
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => {
+            addChatMessage('📋 Address copied to clipboard!', 'assistant');
+        }).catch(err => {
+            console.error('Failed to copy: ', err);
+            addChatMessage('❌ Failed to copy address.', 'assistant');
+        });
+    } else {
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            addChatMessage('📋 Address copied to clipboard!', 'assistant');
+        } catch (err) {
+            console.error('Failed to copy: ', err);
+            addChatMessage('❌ Failed to copy address.', 'assistant');
+        }
+        document.body.removeChild(textArea);
+    }
+}
+
+// FIXED: Timer functions
+function startTransactionTimer(minutes = 15) {
+    const timerElement = document.getElementById('timerDisplay');
+    const timerContainer = document.getElementById('transactionTimer');
+    
+    if (!timerElement || !timerContainer) {
+        console.warn('Timer elements not found');
+        return;
+    }
+    
+    timerContainer.style.display = 'block';
+    let timeLeft = minutes * 60;
+    
+    transactionTimer = setInterval(() => {
+        const mins = Math.floor(timeLeft / 60);
+        const secs = timeLeft % 60;
+        
+        timerElement.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        
+        if (timeLeft <= 300) {
+            timerContainer.style.background = 'var(--apple-orange)';
+        } else if (timeLeft <= 120) {
+            timerContainer.style.background = 'var(--apple-red)';
+        }
+        
+        if (timeLeft <= 0) {
+            clearInterval(transactionTimer);
+            timerElement.textContent = 'EXPIRED';
+            timerContainer.style.background = 'var(--apple-red)';
+            
+            if (paymentCheckInterval) {
+                clearInterval(paymentCheckInterval);
+            }
+            
+            addChatMessage('⚠️ Payment timer expired.', 'assistant');
+        }
+        
+        timeLeft--;
+    }, 1000);
+}
+
+function stopTransactionTimer() {
+    if (transactionTimer) {
+        clearInterval(transactionTimer);
+        transactionTimer = null;
+    }
+    const timerContainer = document.getElementById('transactionTimer');
+    if (timerContainer) {
+        timerContainer.style.display = 'none';
+        timerContainer.style.background = 'var(--apple-orange)';
+    }
+}
+
+// FIXED: Cancel payment
+function cancelPayment() {
+    if (paymentCheckInterval) {
+        clearInterval(paymentCheckInterval);
+    }
+    stopTransactionTimer();
+    
+    const instructionsEl = document.querySelector('.payment-instructions');
+    if (instructionsEl) {
+        instructionsEl.remove();
+    }
+    
+    cryptoForm.style.display = 'flex';
+    document.querySelector('.features-list').style.display = 'block';
+    
+    addChatMessage('❌ Payment cancelled.', 'assistant');
+}
+
+// FIXED: Hide mock card
+function hideMockCard() {
+    mockCardContainer.style.display = 'none';
+    cryptoForm.style.display = 'flex';
+    document.querySelector('.features-list').style.display = 'block';
+    
+    if (paymentCheckInterval) {
+        clearInterval(paymentCheckInterval);
+    }
+    stopTransactionTimer();
+    
+    const instructionsEl = document.querySelector('.payment-instructions');
+    if (instructionsEl) {
+        instructionsEl.remove();
+    }
+
+    addChatMessage("Previous card details hidden. You can fund a new card using the form above.", 'assistant');
+}
+
+// Chat and messaging functions
+async function sendChatMessage() {
+    const messageText = chatInput.value.trim();
+    if (!messageText) return;
+    
+    addChatMessage(messageText, 'user');
+    chatInput.value = '';
+    chatInput.style.height = 'auto';
+    sendBtn.disabled = true;
+    showTypingIndicator();
+
+    try {
+        const response = await fetch(`${ARIA_API_URL}/conversation/${ARIA_SESSION_ID}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: messageText }),
+        });
+
+        hideTypingIndicator();
+        if (!response.ok) {
+            throw new Error('Server error');
+        }
+        
+        const data = await response.json();
+        let enhancedResponse = data.response;
+        
+        if (data.response.includes('crypto') || data.response.includes('payment')) {
+            if (nowPaymentsEnabled) {
+                enhancedResponse += "\n\n💎 **Live Cryptocurrency Processing Available**";
+            } else {
+                enhancedResponse += "\n\n🧪 **Demo Mode**";
+            }
+        }
+        
+        addChatMessage(enhancedResponse, 'assistant');
+
+    } catch (error) {
+        console.error('Error sending message:', error);
+        hideTypingIndicator();
+        addChatMessage('Sorry, I encountered an error. Please try again.', 'assistant');
+    }
+}
+
+function addChatMessage(text, sender) {
+    const messageElement = document.createElement('div');
+    messageElement.className = `message ${sender}`;
+    messageElement.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+    messagesContainer.appendChild(messageElement);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+function showTypingIndicator() {
+    typingIndicator.style.display = 'flex';
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+function hideTypingIndicator() {
+    typingIndicator.style.display = 'none';
+}
+
+// Utility functions
+function generateMockCardDetails() {
+    const cardNumber = Array(4).fill(0).map(() => Math.floor(1000 + Math.random() * 9000)).join(' ');
+    const currentYear = new Date().getFullYear();
+    const expiryYear = (currentYear + Math.floor(Math.random() * 3) + 3).toString().slice(-2); 
+    const expiryMonth = ('0' + (Math.floor(Math.random() * 12) + 1)).slice(-2);
+    const cvv = Math.floor(100 + Math.random() * 900).toString();
+    return { cardNumber, expiryDate: `${expiryMonth}/${expiryYear}`, cvv };
+}
+
+// Payment method switching
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.payment-tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+            const method = this.dataset.method;
+            
+            document.querySelectorAll('.payment-tab').forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+
+            cryptoForm.style.display = method === 'crypto' ? 'flex' : 'none';
+            bankForm.classList.toggle('active', method === 'bank');
+            ccBillForm.classList.toggle('active', method === 'cc-bill');
+        });
+    });
+
+    // Initialize NOWPayments
+    setTimeout(initializeNOWPayments, 1000);
+    
+    // Initialize crypto selector
+    document.querySelectorAll('.crypto-option').forEach(option => {
+        option.addEventListener('click', function() {
+            document.querySelectorAll('.crypto-option').forEach(opt => opt.classList.remove('selected'));
+            this.classList.add('selected');
+            updateMinimumAmount(this.dataset.crypto);
+        });
+    });
+});
+
+// Chat input handling
+chatInput.addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 80) + 'px';
+    sendBtn.disabled = !this.value.trim();
+});
+
+chatInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        if (!sendBtn.disabled) sendChatMessage();
+    }
+});
+
+// Initialize send button state
+if (sendBtn) {
+    sendBtn.disabled = true;
+}
+
+// Authentication state management
+let isUserAuthenticated = false;
+
+// Auth modal functions
+function showAuthModal() {
+    document.getElementById('modalOverlay').style.display = 'block';
+    showSignIn(); // Show Sign In form by default
+}
+
+function closeAuthModal() {
+    // Only allow closing if user is authenticated
+    if (isUserAuthenticated) {
+        document.getElementById('modalOverlay').style.display = 'none';
+    }
+}
+
+// Show/hide main content based on auth state
+function showMainContent() {
+    document.getElementById('loginRequiredOverlay').style.display = 'none';
+    document.getElementById('topNav').style.display = 'block';
+    document.getElementById('heroSection').style.display = 'block';
+    document.getElementById('mainContent').style.display = 'grid';
+    isUserAuthenticated = true;
+}
+
+function hideMainContent() {
+    document.getElementById('loginRequiredOverlay').style.display = 'flex';
+    document.getElementById('topNav').style.display = 'none';
+    document.getElementById('heroSection').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'none';
+    isUserAuthenticated = false;
+}
+
+function showSignIn() {
+    document.getElementById('signInForm').style.display = 'block';
+    document.getElementById('signUpForm').style.display = 'none';
+    document.getElementById('signInTab').classList.add('active');
+    document.getElementById('signUpTab').classList.remove('active');
+}
+
+function showSignUp() {
+    document.getElementById('signInForm').style.display = 'none';
+    document.getElementById('signUpForm').style.display = 'block';
+    document.getElementById('signInTab').classList.remove('active');
+    document.getElementById('signUpTab').classList.add('active');
+}
+
+// Auth functions
+async function signInWithGoogle() {
+    if (!supabase) {
+        addChatMessage("Authentication service not available.", "assistant");
+        return;
+    }
+    try {
+        const { error } = await supabase.auth.signInWithOAuth({
+            provider: 'google',
+            options: { redirectTo: window.location.origin }
+        });
+        if (error) throw error;
+    } catch (error) {
+        console.error('Error signing in:', error);
+        addChatMessage(`Error during sign-in: ${error.message}`, 'assistant');
+    }
+}
+
+async function signOut() {
+    if (!supabase) return;
+    try {
+        const { error } = await supabase.auth.signOut();
+        if (error) throw error;
+        stopTransactionTimer();
+        // Clear any ongoing timers or intervals
+        if (paymentCheckInterval) clearInterval(paymentCheckInterval);
+        if (transactionTimer) clearInterval(transactionTimer);
+    } catch (error) {
+        console.error('Error signing out:', error);
+    }
+}
+
+function updateUIForUser(user) {
+    if (user) {
+        // User is authenticated - show main content
+        showMainContent();
+        
+        authButton.textContent = 'Sign Out';
+        authButton.onclick = signOut;
+        userInfoNav.style.display = 'flex';
+        const name = user.user_metadata?.full_name || user.email.split('@')[0];
+        userNameNav.textContent = name;
+        userAvatarNav.src = user.user_metadata?.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=0D8ABC&color=fff&rounded=true`;
+        
+        if (paymentEmailInput && !paymentEmailInput.value) {
+            paymentEmailInput.value = user.email;
+        }
+        
+        addChatMessage(`Welcome back, ${name}! How can I assist you today?`, 'assistant');
+        ARIA_SESSION_ID = `user_${user.id}_${generateAriaSessionId()}`;
+
+    } else {
+        // User is not authenticated - hide main content
+        hideMainContent();
+        
+        authButton.textContent = 'Sign In';
+        authButton.onclick = showAuthModal;
+        userInfoNav.style.display = 'none';
+        ARIA_SESSION_ID = generateAriaSessionId(); 
+    }
+}
+
+// Additional payment handlers
+async function processBankTransfer() {
+    const amount = document.querySelector('#bankForm input[type="number"]').value;
+    const accountHolder = document.querySelector('#bankForm input[type="text"]').value;
+    
+    if (!amount || amount < 100) {
+        addChatMessage("Minimum wire transfer amount is $100.00", "assistant");
+        return;
+    }
+    
+    if (!accountHolder.trim()) {
+        addChatMessage("Please provide your bank account holder name.", "assistant");
+        return;
+    }
+
+    const reference = `REF-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
+    document.getElementById('bankReference').textContent = reference;
+    
+    addChatMessage(`🏦 Bank transfer request submitted!
+💰 Amount: $${amount}
+🔢 Reference: ${reference}
+👤 Account holder: ${accountHolder}
+
+📧 Support ticket created automatically.`, 'assistant');
+}
+
+async function processCreditCardBill() {
+    const ccNumber = document.querySelector('#ccBillForm input[placeholder*="1234"]').value;
+    const currentBalance = document.querySelector('#ccBillForm input[placeholder*="500.00"]').value;
+    const paymentAmount = document.querySelector('#ccBillForm input[placeholder*="Amount to pay"]').value;
+    
+    if (!ccNumber || ccNumber.replace(/\s/g, '').length < 16) {
+        addChatMessage("Please enter a valid 16-digit credit card number.", "assistant");
+        return;
+    }
+    
+    if (!currentBalance || !paymentAmount) {
+        addChatMessage("Please enter both your current balance and payment amount.", "assistant");
+        return;
+    }
+    
+    if (parseFloat(paymentAmount) > parseFloat(currentBalance)) {
+        addChatMessage("Payment amount cannot exceed current balance.", "assistant");
+        return;
+    }
+
+    const maskedCC = ccNumber.slice(-4);
+    
+    addChatMessage(`💳 Credit card bill payment request submitted!
+🎯 Card ending in: ${maskedCC}
+💰 Payment amount: $${paymentAmount}
+📊 Current balance: $${currentBalance}
+
+📧 Support ticket created automatically.`, 'assistant');
+}
+
+// Additional event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    // Sign In form handler
+    const emailSignInForm = document.getElementById('emailSignInForm');
+    if (emailSignInForm) {
+        emailSignInForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const email = document.getElementById('signInEmail').value;
+            const password = document.getElementById('signInPassword').value;
+            const submitBtn = document.getElementById('signInSubmitBtn');
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Signing In...';
+            
+            try {
+                if (!supabase) throw new Error('Authentication service unavailable');
+                
+                const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+                if (error) throw error;
+                
+                closeAuthModal();
+                // updateUIForUser will be called automatically by the auth state change
+                
+            } catch (error) {
+                console.error('Sign in error:', error);
+                addChatMessage(`Sign in failed: ${error.message}`, 'assistant');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Sign In';
+            }
+        });
+    }
+
+    // Sign Up form handler
+    const emailSignUpForm = document.getElementById('emailSignUpForm');
+    if (emailSignUpForm) {
+        emailSignUpForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const email = document.getElementById('signUpEmail').value;
+            const password = document.getElementById('signUpPassword').value;
+            const submitBtn = document.getElementById('signUpSubmitBtn');
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Creating Account...';
+            
+            try {
+                if (!supabase) throw new Error('Authentication service unavailable');
+                
+                const { data, error } = await supabase.auth.signUp({ email, password });
+                if (error) throw error;
+                
+                closeAuthModal();
+                // updateUIForUser will be called automatically by the auth state change
+                
+            } catch (error) {
+                console.error('Signup error:', error);
+                addChatMessage(`Signup failed: ${error.message}`, 'assistant');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Create Account';
+            }
+        });
+    }
+
+    // Credit card number formatting
+    const ccNumberInput = document.getElementById('ccNumber');
+    if (ccNumberInput) {
+        ccNumberInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+            let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+            e.target.value = formattedValue;
+        });
+    }
+});
+
+// Navbar scroll effect
+window.addEventListener('scroll', function() {
+    const nav = document.querySelector('.top-nav');
+    if (nav) {
+        if (window.pageYOffset > 50) { 
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
+    }
+});
+
+// Modal close on overlay click
+const modalOverlay = document.getElementById('modalOverlay');
+if (modalOverlay) {
+    modalOverlay.addEventListener('click', function(e) {
+        if (e.target === this) closeAuthModal();
+    });
+}
+
+// Cleanup on page unload
+window.addEventListener('beforeunload', function() {
+    if (paymentCheckInterval) clearInterval(paymentCheckInterval);
+    if (transactionTimer) clearInterval(transactionTimer);
+});
+
+// Initialize Supabase auth listener
+if (supabase) {
+    supabase.auth.onAuthStateChange((event, session) => {
+        const user = session?.user || null;
+        updateUIForUser(user);
+    });
+    
+    // Check for existing session on page load
+    supabase.auth.getSession().then(({ data: { session } }) => {
+        const user = session?.user || null;
+        updateUIForUser(user);
+    });
+} else {
+    // If no Supabase, force show login screen
+    hideMainContent();
+    if (authButton) {
+        authButton.onclick = () => addChatMessage("Authentication unavailable.", "assistant");
+    }
+}
+
+// Initialize payment form override
+document.addEventListener('DOMContentLoaded', function() {
+    const cryptoFormElement = document.getElementById('cryptoForm');
+    if (cryptoFormElement) {
+        // Remove any existing onsubmit attribute
+        cryptoFormElement.removeAttribute('onsubmit');
+        
+        // Add our event listener
+        cryptoFormElement.addEventListener('submit', processCryptoPayment);
+    }
+    
+    // Ensure login screen is shown initially if no auth service
+    if (!supabase) {
+        hideMainContent();
+    }
+});
+
+// Global error handler for debugging
+window.addEventListener('error', function(e) {
+    console.error('Global error caught:', e.error);
+    console.error('Error details:', {
+        message: e.message,
+        filename: e.filename,
+        lineno: e.lineno,
+        colno: e.colno,
+        stack: e.error?.stack
+    });
+});
+
+// Console logging for debugging
+console.log('🚀 Enhanced Community Platform v5.0 loaded');
+console.log('📍 ARIA API URL:', ARIA_API_URL);
+console.log('💎 NOWPayments integration ready');
+console.log('🔑 NOWPayments API Key: Y1PBEWN-***-***-QQ7BRQH (configured on server)');
+console.log('🔔 NOWPayments IPN Secret: t482t52T***N96 (configured on server)');
+console.log('🔧 All functions defined and ready');
+console.log('🔄 Initializing NOWPayments in 1 second...');
+</script>
+</body>
+</html>

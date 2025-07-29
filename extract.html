@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARIA - Data Extraction</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --apple-blue: #007AFF;
+            --apple-blue-dark: #0056B3;
+            --apple-green: #30D158;
+            --apple-orange: #FF9500;
+            --apple-red: #FF3B30;
+            --apple-purple: #AF52DE;
+            --apple-gray: #8E8E93;
+            --apple-gray-light: #F2F2F7;
+            --apple-gray-2: #AEAEB2;
+            --apple-gray-3: #C7C7CC;
+            --apple-gray-4: #D1D1D6;
+            --apple-gray-5: #E5E5EA;
+            --apple-gray-6: #F2F2F7; /* Light mode card/input background */
+            --apple-black: #000000;
+            --apple-white: #FFFFFF;
+            
+            /* Semantic variables from index.html */
+            --bg-primary: #FAFAFA;
+            --bg-secondary: rgba(255, 255, 255, 0.8);
+            --bg-glass: rgba(255, 255, 255, 0.72);
+            --text-primary: #1D1D1F;
+            --text-secondary: #64748B; /* Adjusted for slightly darker secondary text if needed, else use apple-gray */
+            --text-light: #94a3b8; /* For placeholders, can use apple-gray */
+            --border-color: rgba(0, 0, 0, 0.1);
+            --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-large: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --blur: blur(20px);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; /* */
+            background: linear-gradient(135deg, #FFFFFF 0%, #F5F7FA 100%); /* */
+            min-height: 100vh;
+            line-height: 1.47059; /* */
+            -webkit-font-smoothing: antialiased; /* */
+            -moz-osx-font-smoothing: grayscale; /* */
+            color: var(--text-primary);
+            padding: 20px;
+        }
+
+        .page-container { /* Renamed .container to avoid conflict if any global .container styles exist */
+            max-width: 800px; /* Adjusted width */
+            margin: 40px auto; /* Added top/bottom margin */
+            background-color: var(--bg-glass); /* */
+            backdrop-filter: var(--blur); /* */
+            -webkit-backdrop-filter: var(--blur); /* */
+            border-radius: 16px; /* */
+            border: 1px solid var(--border-color); /* */
+            box-shadow: var(--shadow-large); /* */
+            overflow: hidden;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.9); /* */
+            backdrop-filter: var(--blur); /* */
+            -webkit-backdrop-filter: var(--blur); /* */
+            border-bottom: 1px solid var(--border-color); /* */
+            padding: 24px 32px; /* Adjusted padding */
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px; /* */
+            font-weight: 700; /* */
+            color: var(--text-primary); /* */
+            margin-bottom: 4px; /* */
+            letter-spacing: -0.022em; /* */
+        }
+
+        .header p {
+            font-size: 17px; /* */
+            color: var(--text-secondary); /* */
+            font-weight: 400; /* */
+        }
+
+        .content {
+            padding: 32px; /* Adjusted padding */
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--apple-blue);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 24px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: background-color 0.2s ease;
+        }
+
+        .back-link:hover {
+            background-color: rgba(0, 122, 255, 0.1); /* Light blue background on hover */
+        }
+
+        .back-link svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .info-card {
+            background-color: var(--apple-gray-6);
+            border: 1px solid var(--apple-gray-5);
+            border-radius: 12px; /* */
+            padding: 20px;
+            margin-bottom: 32px;
+            position: relative;
+        }
+        
+        .info-card::before { /* Keeping the lightbulb icon, styled to fit */
+            content: '💡';
+            position: absolute;
+            top: 20px;
+            left: -16px; /* Position outside */
+            background-color: var(--apple-gray-5);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            border: 2px solid var(--apple-white); /* Border to lift it off the card */
+            box-shadow: var(--shadow-light);
+        }
+
+
+        .info-card h3 {
+            color: var(--text-primary); /* Changed from secondary to primary */
+            font-size: 17px; /* */
+            font-weight: 600; /* */
+            margin-bottom: 8px;
+            margin-left: 20px; /* Space for the icon */
+        }
+
+        .info-card p {
+            color: var(--text-secondary); /* */
+            font-size: 15px; /* */
+            margin-left: 20px; /* Space for the icon */
+            margin-bottom: 0;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600; /* */
+            color: var(--text-primary); /* */
+            font-size: 17px; /* */
+            letter-spacing: -0.01em; /* */
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 20px; /* */
+            border: 1px solid var(--apple-gray-4); /* */
+            border-radius: 12px; /* */
+            font-size: 17px; /* */
+            font-family: inherit; /* */
+            outline: none; /* */
+            transition: all 0.2s ease; /* */
+            background: var(--apple-white); /* */
+            color: var(--text-primary); /* */
+            -webkit-appearance: none; /* */
+        }
+
+        .form-input:focus { /* */
+            border-color: var(--apple-blue); /* */
+            box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1); /* */
+        }
+
+        .form-input::placeholder {
+            color: var(--apple-gray); /* */
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--apple-blue) 0%, var(--apple-purple) 100%); /* */
+            color: white; /* */
+            border: none; /* */
+            padding: 16px 32px; /* */
+            border-radius: 12px; /* */
+            font-size: 17px; /* */
+            font-weight: 600; /* */
+            cursor: pointer; /* */
+            transition: all 0.2s ease; /* */
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3); /* */
+            letter-spacing: -0.01em; /* */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center; /* Center content */
+            gap: 8px;
+            text-decoration: none;
+            width: 100%; /* Make button full width like in forms */
+        }
+
+        .btn:hover { /* */
+            transform: translateY(-2px); /* */
+            box-shadow: 0 8px 20px rgba(0, 122, 255, 0.4); /* */
+        }
+
+        .btn:active { /* */
+            transform: translateY(0); /* */
+        }
+        
+        .btn:disabled { /* */
+            background: var(--apple-gray-3); /* */
+            box-shadow: none; /* */
+            transform: none; /* */
+            cursor: not-allowed; /* */
+        }
+
+
+        .btn svg { /* For icon within button */
+            width: 20px;
+            height: 20px;
+        }
+        
+        .loading-spinner {
+            display: none; /* Hidden by default */
+            width: 20px; /* Match icon size */
+            height: 20px; /* Match icon size */
+            border: 3px solid rgba(255, 255, 255, 0.3); /* Light border for spinner track */
+            border-top: 3px solid var(--apple-white); /* Spinner color */
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .btn.loading .btn-text {
+            display: none;
+        }
+        .btn.loading .loading-spinner {
+            display: block;
+        }
+
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .status-message {
+            padding: 12px 16px; /* */
+            border-radius: 12px; /* */
+            margin-top: 20px;
+            font-weight: 500;
+            font-size: 15px;
+            display: none; /* Hidden by default */
+            align-items: center;
+            gap: 10px;
+            border: 1px solid transparent;
+        }
+
+        .status-message.success {
+            background-color: rgba(48, 209, 88, 0.1); /* Light green */
+            border-color: var(--apple-green);
+            color: var(--apple-green);
+        }
+
+        .status-message.error {
+            background-color: rgba(255, 59, 48, 0.1); /* Light red */
+            border-color: var(--apple-red);
+            color: var(--apple-red);
+        }
+
+        .status-message.info {
+            background-color: rgba(0, 122, 255, 0.1); /* Light blue */
+            border-color: var(--apple-blue);
+            color: var(--apple-blue);
+        }
+
+        .status-message.warning {
+            background-color: rgba(255, 149, 0, 0.1); /* Light orange */
+            border-color: var(--apple-orange);
+            color: var(--apple-orange);
+        }
+
+
+        .result-container {
+            margin-top: 32px;
+            padding: 24px; /* */
+            background-color: var(--apple-gray-6); /* Slightly different background for distinction */
+            border-radius: 16px; /* */
+            border: 1px solid var(--apple-gray-5); /* */
+            display: none; /* Hidden by default */
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--apple-gray-4); /* */
+        }
+
+        .result-header h3 {
+            color: var(--text-primary); /* */
+            font-size: 21px; /* */
+            font-weight: 700; /* */
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: -0.022em; /* */
+        }
+        
+        .result-header h3 svg {
+            width: 20px; /* Consistent icon size */
+            height: 20px;
+        }
+
+
+        .result-meta {
+            display: flex; /* Align items */
+            align-items: center; /* Align items */
+            gap: 12px; /* Space between date and button */
+        }
+        
+        #extractedAt {
+            color: var(--text-secondary); /* */
+            font-size: 14px; /* */
+        }
+
+        .copy-json-btn {
+            background: var(--apple-white); /* */
+            color: var(--apple-blue);
+            border: 1px solid var(--apple-gray-4); /* */
+            padding: 8px 16px; /* */
+            border-radius: 20px; /* Pill shape like login button */ /* */
+            font-size: 14px; /* */
+            font-weight: 500; /* */
+            cursor: pointer; /* */
+            transition: all 0.2s ease; /* */
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .copy-json-btn:hover {
+            border-color: var(--apple-blue); /* */
+            background-color: rgba(0, 122, 255, 0.05); /* */
+        }
+
+        .copy-json-btn svg {
+            width: 14px; /* Smaller icon for this button */
+            height: 14px;
+        }
+
+        .json-container {
+            background-color: var(--apple-white); /* */
+            border: 1px solid var(--apple-gray-4); /* */
+            border-radius: 12px; /* */
+            padding: 20px;
+            font-family: 'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace; /* Apple's mono font */
+            font-size: 14px;
+            line-height: 1.6;
+            overflow-x: auto;
+            max-height: 400px; /* Adjusted height */
+            overflow-y: auto;
+            color: var(--text-primary);
+        }
+        
+        .json-container pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 768px) { /* */
+            body {
+                padding: 10px;
+            }
+
+            .page-container {
+                margin: 20px auto;
+                border-radius: 12px; /* */
+            }
+
+            .header {
+                padding: 20px; /* */
+            }
+
+            .header h1 {
+                font-size: 24px; /* */
+            }
+            .header p {
+                font-size: 15px;
+            }
+
+            .content {
+                padding: 20px; /* */
+            }
+            
+            .info-card::before {
+                display: none; /* Hide side icon on smaller screens for simplicity */
+            }
+            .info-card h3, .info-card p {
+                margin-left: 0;
+            }
+
+            .result-header { /* */
+                flex-direction: column; /* */
+                align-items: flex-start; /* */
+                gap: 12px; /* */
+            }
+            .result-meta {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+        
+        /* iOS Safari specific fixes */
+        @supports (-webkit-touch-callout: none) { /* */
+            .page-container { /* */
+                backdrop-filter: blur(10px); /* */
+                -webkit-backdrop-filter: blur(10px); /* */
+            }
+        }
+
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) { /* */
+            :root { /* */
+                --bg-primary: #000000; /* */
+                --bg-secondary: rgba(28, 28, 30, 0.9); /* */
+                --bg-glass: rgba(28, 28, 30, 0.8); /* */
+                --text-primary: #FFFFFF; /* */
+                --text-secondary: #8E8E93; /* */
+                --apple-gray-6: #1C1C1E; /* Used for cards/inputs in light, becomes dark bg for elements */ /* */
+                --apple-white: #1C1C1E; /* Inputs, etc. become dark */ /* */
+                --border-color: rgba(255, 255, 255, 0.15); /* Slightly more visible dark mode border */ /* */
+                --apple-gray-5: #2C2C2E; /* Darker gray for borders in dark mode */
+                --apple-gray-4: #3A3A3C; 
+            }
+
+            body { /* */
+                background: linear-gradient(135deg, #000000 0%, #1C1C1E 100%); /* */
+            }
+            
+            .header {
+                background: rgba(28, 28, 30, 0.9); /* */
+                border-bottom: 1px solid var(--border-color); /* */
+            }
+
+            .info-card {
+                background-color: #2C2C2E; /* Darker card background */
+                border-color: #3A3A3C;
+            }
+            .info-card::before {
+                background-color: #3A3A3C;
+                border-color: var(--apple-black);
+            }
+
+
+            .form-input {
+                background: #2C2C2E; /* Dark input */
+                border-color: #3A3A3C;
+                color: var(--text-primary);
+            }
+            .form-input:focus { /* */
+                border-color: var(--apple-blue); /* */
+                box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.2); /* Adjusted alpha for dark mode */ /* */
+            }
+            .form-input::placeholder { /* */
+                color: var(--apple-gray); /* */
+            }
+            
+            .status-message.success {
+                background-color: rgba(48, 209, 88, 0.15);
+                color: #30D158; /* Brighter green for dark mode */
+            }
+            .status-message.error {
+                background-color: rgba(255, 59, 48, 0.15);
+                color: #FF453A; /* Brighter red */
+            }
+            .status-message.info {
+                background-color: rgba(0, 122, 255, 0.15);
+                color: #0A84FF; /* Brighter blue */
+            }
+            .status-message.warning {
+                background-color: rgba(255, 149, 0, 0.15);
+                color: #FF9F0A; /* Brighter orange */
+            }
+
+            .result-container {
+                background-color: #1C1C1E; /* Darker background for result */
+                border-color: #3A3A3C;
+            }
+             .result-header {
+                border-bottom: 1px solid var(--apple-gray-4);
+            }
+
+            .copy-json-btn {
+                background: #2C2C2E; /* Dark mode button */
+                color: var(--apple-blue);
+                border-color: #3A3A3C;
+            }
+            .copy-json-btn:hover {
+                border-color: var(--apple-blue);
+                background-color: rgba(0, 122, 255, 0.1);
+            }
+
+            .json-container {
+                background-color: #000000; /* Black background for JSON in dark mode */
+                border-color: #3A3A3C;
+                color: var(--apple-gray-light);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <div class="header">
+            <h1>ARIA Data Extraction</h1>
+            <p>Extract structured data from conversation sessions</p>
+        </div>
+        
+        <div class="content">
+            <a href="/" class="back-link">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Back to Chat
+            </a>
+
+            <div class="info-card">
+                <h3>How to Use</h3>
+                <p>Enter the session ID from your ARIA chat. Extracted data will appear below.</p>
+            </div>
+            
+            <form id="extractionForm">
+                <div class="form-group">
+                    <label for="sessionId">Session ID</label>
+                    <input 
+                        type="text" 
+                        id="sessionId" 
+                        class="form-input"
+                        placeholder="e.g., session_abc123xyz or user_xxx_session_yyy"
+                        required
+                    />
+                </div>
+                
+                <button type="submit" class="btn" id="extractButton">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <span class="btn-text">Extract Data</span>
+                    <div class="loading-spinner"></div>
+                </button>
+            </form>
+            
+            <div id="status" class="status-message"></div>
+            
+            <div id="result" class="result-container">
+                <div class="result-header">
+                    <h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        Extracted Data
+                    </h3>
+                    <div class="result-meta">
+                        <span id="extractedAt"></span>
+                        <button class="copy-json-btn" onclick="copyJsonData()">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                            Copy JSON
+                        </button>
+                    </div>
+                </div>
+                <div class="json-container">
+                    <pre id="extractedJson"></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Use the same API URL as the chat interface
+        const API_URL = 'https://web-production-4a4e.up.railway.app'; //
+        let extractedData = null;
+        
+        document.getElementById('extractionForm').addEventListener('submit', extractData);
+        
+        async function extractData(event) {
+            event.preventDefault();
+            
+            const sessionId = document.getElementById('sessionId').value.trim();
+            const extractButton = document.getElementById('extractButton');
+            // const btnText = extractButton.querySelector('.btn-text'); // Not needed with class toggle
+            // const loadingSpinner = extractButton.querySelector('.loading-spinner'); // Not needed with class toggle
+            
+            if (!sessionId) {
+                showStatus('Please enter a session ID.', 'warning'); // Changed to warning
+                return;
+            }
+            
+            // Show loading state
+            extractButton.disabled = true; //
+            extractButton.classList.add('loading'); // Add loading class
+            // btnText.style.display = 'none'; // Handled by CSS
+            // loadingSpinner.style.display = 'block'; // Handled by CSS
+            showStatus('Fetching conversation data...', 'info'); //
+            document.getElementById('result').style.display = 'none'; // Hide previous results
+
+            try {
+                const response = await fetch(`${API_URL}/extractions/${sessionId}`); //
+                
+                if (!response.ok) { //
+                    const errorData = await response.json().catch(() => ({ detail: `HTTP error ${response.status}` }));
+                    if (response.status === 404) { //
+                        throw new Error(`No conversation found for session ID: ${sessionId}. Please ensure the ID is correct and a conversation exists.`); //
+                    } else {
+                        throw new Error(errorData.detail || `Server error: ${response.status}. Please try again later.`); //
+                    }
+                }
+                
+                const data = await response.json(); //
+                extractedData = data; //
+                
+                displayResults(data); //
+                showStatus('Data extracted successfully!', 'success'); //
+                
+                document.getElementById('result').scrollIntoView({  //
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            } catch (error) {
+                console.error('Error:', error); //
+                showStatus(error.message, 'error'); //
+                 document.getElementById('result').style.display = 'none'; // Ensure result is hidden on error
+            } finally {
+                // Reset button state
+                extractButton.disabled = false; //
+                extractButton.classList.remove('loading'); // Remove loading class
+                // btnText.style.display = 'block'; // Handled by CSS
+                // loadingSpinner.style.display = 'none'; // Handled by CSS
+            }
+        }
+        
+        function displayResults(data) {
+            const resultContainer = document.getElementById('result'); //
+            const jsonElement = document.getElementById('extractedJson'); //
+            const extractedAtElement = document.getElementById('extractedAt'); //
+            
+            const formattedJson = JSON.stringify(data, null, 2); //
+            jsonElement.textContent = formattedJson; //
+            
+            extractedAtElement.textContent = `Extracted at ${new Date().toLocaleString()}`; //
+            
+            resultContainer.style.display = 'block'; //
+        }
+        
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('status'); //
+            statusDiv.innerHTML = ''; // Clear previous content (e.g. icons if we add them)
+            // Simple text message for now, can be enhanced with icons later
+            statusDiv.textContent = message; //
+            statusDiv.className = `status-message ${type}`; //
+            statusDiv.style.display = 'flex'; //
+            
+            if (type === 'success' || type === 'info') { //
+                setTimeout(() => {
+                    // Check if the message is still the same one before hiding
+                    if (statusDiv.textContent === message) {
+                        statusDiv.style.display = 'none';
+                    }
+                }, 5000); //
+            }
+        }
+        
+        function copyJsonData() {
+            if (!extractedData) return; //
+            
+            const jsonText = JSON.stringify(extractedData, null, 2); //
+            const copyButton = document.querySelector('.copy-json-btn'); //
+            const originalButtonContent = copyButton.innerHTML; //
+            
+            navigator.clipboard.writeText(jsonText).then(() => { //
+                copyButton.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                    Copied!
+                `; //
+                
+                setTimeout(() => { //
+                    copyButton.innerHTML = originalButtonContent; //
+                }, 2000); //
+                
+                showStatus('JSON data copied to clipboard.', 'success'); //
+            }).catch(err => {
+                console.error('Failed to copy: ', err); //
+                showStatus('Failed to copy data. Your browser might not support this feature or permission was denied.', 'error'); //
+            });
+        }
+        
+        document.getElementById('sessionId').addEventListener('keypress', function(event) { //
+            if (event.key === 'Enter') { //
+                event.preventDefault(); // Prevent form submission if it's inside a form
+                document.getElementById('extractButton').click(); // Trigger button click
+            }
+        });
+        
+        document.addEventListener('DOMContentLoaded', () => { //
+            document.getElementById('sessionId').focus(); //
+        });
+    </script>
+</body>
+</html>
