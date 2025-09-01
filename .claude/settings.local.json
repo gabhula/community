@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:laso.finance)",
+      "WebSearch"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
